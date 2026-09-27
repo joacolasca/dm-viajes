@@ -1,0 +1,737 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DM Viajes | Viajes que transforman</title>
+<meta name="description" content="DM Viajes: agencia argentina de viajes a medida. Destinos, paquetes y asesoramiento personalizado antes, durante y después de tu viaje.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300..700&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="app" v-cloak>
+<div style="width: 100%; min-height: 100vh; background: #ffffff; color: #0A0A0B; overflow-x: clip">
+<div class="progress" aria-hidden="true"></div>
+
+<header class="hdr">
+<div class="wrap" style="height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 24px">
+<button class="logo" @click="goHome" aria-label="DM Viajes, ir al inicio">
+<span style="display: flex; flex-direction: column; line-height: 0.82">
+<span class="serif" style="font-size: 30px">DM</span>
+<span style="font-size: 10px; font-weight: 700; letter-spacing: 0.42em">VIAJES</span>
+</span>
+<span style="width: 8px; height: 8px; border-radius: 50%; background: #7CC4EC; align-self: flex-start; margin-top: 4px"></span>
+</button>
+<nav class="desk" style="display: flex; align-items: center; gap: 22px" aria-label="Principal">
+<template v-for="(n, $index) in nav">
+<button :class="`navlink ${n.cls}`" @click="n.go">{{ n.label }}</button>
+</template>
+</nav>
+<div style="display: flex; align-items: center; gap: 10px">
+<button class="btn btn-ink desk" @click="goContact" style="min-height: 44px; padding: 0 20px; font-size: 14px">Cotizar viaje <svg class="ic arr" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
+<button class="iconbtn mob" @click="toggleMenu" aria-label="Abrir menú"><svg class="ic" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></button>
+</div>
+</div>
+<template v-if="menuOpen">
+<div class="mob panel" style="flex-direction: column; gap: 4px; padding: 8px 16px 24px; border-top: 1px solid #E2E9EE">
+<template v-for="(n, $index) in nav">
+<button :class="`navlink ${n.cls}`" @click="n.go" style="text-align: left; font-size: 20px; padding: 12px 6px">{{ n.label }}</button>
+</template>
+<button class="btn btn-ink" @click="goContact" style="margin-top: 12px">Cotizar viaje</button>
+</div>
+</template>
+</header>
+
+<main>
+
+<template v-if="isHome">
+<div class="view">
+
+<section class="hero" style="position: relative; height: 88vh; min-height: 660px; max-height: 920px; margin: 12px 16px 0; border-radius: 28px; overflow: hidden; background: #0A0A0B">
+<template v-for="(sl, $index) in slides">
+<div :class="`slide ${sl.cls}`" style="position: absolute; inset: 0">
+<div class="kb" style="position: absolute; inset: 0"><img :src="sl.art.img" :alt="sl.art.alt" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block"></div>
+</div>
+</template>
+<div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10,10,11,0.35) 0%, rgba(10,10,11,0) 28%, rgba(10,10,11,0.2) 55%, rgba(10,10,11,0.78) 100%)"></div>
+<div class="hero-inner" style="position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: space-between; padding: 40px 48px 36px; color: #ffffff">
+<div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px">
+<span class="fade-in" style="display: inline-flex; align-items: center; gap: 10px; height: 36px; padding: 0 16px; border-radius: 999px; background: rgba(10,10,11,0.35); backdrop-filter: blur(10px); font-size: 13px; font-weight: 700"><span style="width: 8px; height: 8px; border-radius: 50%; background: #7CC4EC"></span>Agencia de viajes a medida · Buenos Aires</span>
+</div>
+<div class="hero-row" style="display: flex; justify-content: space-between; align-items: flex-end; gap: 40px">
+<div style="max-width: 760px; display: flex; flex-direction: column; gap: 24px">
+<h1 class="serif hero-title" style="font-size: 108px; line-height: 0.9; letter-spacing: -0.03em">
+<span class="word" style="animation-delay: 0.1s">Viajes</span> <span class="word" style="animation-delay: 0.22s">que</span><br><span class="word it" style="animation-delay: 0.36s; color: #7CC4EC">transforman</span>
+</h1>
+<p class="fade-in" style="font-size: 19px; line-height: 1.55; max-width: 520px; color: rgba(255,255,255,0.9); animation-delay: 0.5s">Diseñamos cada itinerario con vos: escuchamos cómo querés viajar y nos ocupamos de todo, antes, durante y después del viaje.</p>
+<div class="fade-in" style="display: flex; gap: 12px; flex-wrap: wrap; animation-delay: 0.65s">
+<button class="btn btn-cel" @click="goContact">Cotizar mi viaje <svg class="ic arr" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
+<button class="btn btn-glass" @click="goDestinos">Ver destinos</button>
+</div>
+<div style="display: flex; gap: 6px; margin-top: 8px">
+<template v-for="(dt, $index) in dots">
+<button :class="`dot ${dt.cls}`" @click="dt.pick" :aria-label="dt.label"><span class="bar"></span></button>
+</template>
+</div>
+</div>
+<div class="desk fade-in" style="display: flex; flex-direction: column; align-items: flex-end; gap: 6px; text-align: right; animation-delay: 0.6s">
+<span style="font-size: 12px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; opacity: 0.8">Destino destacado</span>
+<span class="serif" style="font-size: 36px; line-height: 1">{{ cur.name }}</span>
+<span style="font-size: 14px; opacity: 0.85">{{ cur.country }}</span>
+</div>
+</div>
+</div>
+</section>
+
+<div class="marquee" style="margin-top: 16px">
+<div class="marquee-track" style="padding: 22px 0">
+<template v-for="(m, $index) in marquee">
+<span style="display: inline-flex; align-items: center; gap: 28px; padding-right: 28px; white-space: nowrap">
+<span class="serif" style="font-size: 34px">{{ m.name }}</span>
+<svg class="ic" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" style="color: #778C43"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"></path></svg>
+</span>
+</template>
+</div>
+</div>
+
+<section class="wrap fx" style="padding-top: 120px; padding-bottom: 40px">
+<div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; margin-bottom: 44px">
+<div style="display: flex; flex-direction: column; gap: 14px; max-width: 640px">
+<span class="eyebrow">Explorá por región</span>
+<h2 class="serif h2" style="font-size: 64px; line-height: 1">Seis regiones, <span class="it">un viaje pensado para vos</span></h2>
+</div>
+<button class="btn btn-line" @click="goDestinos">Ver todos los destinos <svg class="ic arr" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
+</div>
+<div class="bento">
+<template v-for="(r, $index) in regions">
+<button :class="`region-card card fx z ${r.cls}`" @click="r.go" :aria-label="`Explorar ${r.name}`">
+<span class="zoom" style="position: absolute; inset: 0; display: block"><img :src="r.art.img" :alt="r.art.alt" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block"></span>
+<span style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10,10,11,0) 35%, rgba(10,10,11,0.75) 100%)"></span>
+<span style="position: absolute; left: 24px; right: 24px; bottom: 22px; display: flex; justify-content: space-between; align-items: flex-end; gap: 16px">
+<span style="display: flex; flex-direction: column; gap: 6px">
+<span style="font-size: 12px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #BFE3F6">{{ r.count }}</span>
+<span class="serif" style="font-size: 40px; line-height: 1">{{ r.name }}</span>
+<span style="font-size: 14px; color: rgba(255,255,255,0.85)">{{ r.tag }}</span>
+</span>
+<span class="go" style="width: 48px; height: 48px; border-radius: 50%; background: #ffffff; color: #0A0A0B; display: flex; align-items: center; justify-content: center; flex-shrink: 0"><svg class="ic" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>
+</span>
+</button>
+</template>
+</div>
+</section>
+
+<section class="wrap fx" style="padding-top: 100px; position: relative; z-index: 6">
+<div style="border-radius: 28px; background: #EAF4FA; padding: 44px; display: flex; flex-direction: column; gap: 28px">
+<div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap">
+<div style="display: flex; flex-direction: column; gap: 10px"><span class="eyebrow">Buscador</span><h2 class="serif" style="font-size: 44px; line-height: 1">Encontrá tu paquete</h2></div>
+<p style="font-size: 16px; line-height: 1.6; color: #56616B; max-width: 380px">Elegí región, estilo y presupuesto: te mostramos los paquetes que encajan con vos.</p>
+</div>
+<div class="search-bar">
+<template v-for="(d, $index) in pdds">
+<div class="ddw segw">
+<button :class="`seg ${d.cls}`" @click="d.toggle" aria-haspopup="listbox" :aria-expanded="d.exp"><span class="seg-label">{{ d.label }}</span><span class="seg-v">{{ d.value }}</span><svg class="ic chev" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></button>
+<template v-if="d.open">
+<div :class="`dd-menu ${d.align}`" role="listbox" :aria-label="d.label">
+<template v-for="(o, $index) in d.opts"><button :class="`dd-opt ${o.cls}`" role="option" :aria-selected="o.sel" @click="o.pick"><span>{{ o.label }}</span><svg class="ic ck" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></button></template>
+</div>
+</template>
+</div>
+</template>
+<button class="btn btn-ink search-go" @click="searchPlanner">Ver {{ plannerCount }} <svg class="ic arr" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
+</div>
+</div>
+</section>
+
+<section class="wrap fx" style="padding-top: 100px; padding-bottom: 40px">
+<div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; margin-bottom: 44px">
+<div style="display: flex; flex-direction: column; gap: 14px; max-width: 640px">
+<span class="eyebrow olive">Paquetes destacados</span>
+<h2 class="serif h2" style="font-size: 64px; line-height: 1">Itinerarios listos <span class="it">para salir</span></h2>
+<p style="font-size: 17px; line-height: 1.6; color: #56616B">Son punto de partida: cada paquete se ajusta a tus fechas, al ritmo que prefieras y a quién viaja con vos.</p>
+</div>
+<button class="btn btn-line" @click="goPaquetes">Ver los {{ pkgTotal }} paquetes <svg class="ic arr" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
+</div>
+<div class="gauto">
+<template v-for="(p, $index) in featured">
+<article class="card fx" style="display: flex; flex-direction: column; border-radius: 24px; overflow: hidden; background: #ffffff; border: 1px solid #E2E9EE">
+<div style="position: relative; height: 220px; overflow: hidden">
+<div class="zoom" style="position: absolute; inset: 0"><img :src="p.art.img" :alt="p.art.alt" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block"></div>
+<span style="position: absolute; top: 16px; left: 16px; height: 30px; padding: 0 12px; border-radius: 999px; background: rgba(255,255,255,0.92); display: inline-flex; align-items: center; font-size: 12px; font-weight: 700">{{ p.regionName }}</span>
+<span style="position: absolute; top: 16px; right: 16px; height: 30px; padding: 0 12px; border-radius: 999px; background: #56662E; color: #ffffff; display: inline-flex; align-items: center; font-size: 12px; font-weight: 700">{{ p.nightsTxt }}</span>
+</div>
+<div style="padding: 22px; display: flex; flex-direction: column; gap: 14px; flex-grow: 1">
+<h3 class="serif" style="font-size: 30px; line-height: 1.05">{{ p.title }}</h3>
+<p style="font-size: 14px; line-height: 1.55; color: #56616B">{{ p.route }}</p>
+<div style="display: flex; gap: 6px; flex-wrap: wrap">
+<template v-for="(t, $index) in p.tags"><span class="tag">{{ t.t }}</span></template>
+</div>
+<div style="margin-top: auto; padding-top: 14px; border-top: 1px solid #E2E9EE; display: flex; justify-content: space-between; align-items: center; gap: 12px">
+<div style="display: flex; flex-direction: column">
+<span style="font-size: 12px; color: #56616B">Desde, por persona</span>
+<span style="font-size: 22px; font-weight: 700">{{ p.priceTxt }}</span>
+</div>
+<button class="btn btn-line" @click="p.open" style="min-height: 44px; padding: 0 18px; font-size: 14px">Ver itinerario</button>
+</div>
+</div>
+</article>
+</template>
+</div>
+</section>
+
+<section class="fx" style="margin: 110px 16px 0; border-radius: 28px; background: #EEF2E3; color: #0A0A0B; padding: 110px 0">
+<div class="wrap">
+<div class="split" style="display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 64px; align-items: start">
+<div class="fx l" style="display: flex; flex-direction: column; gap: 22px; position: sticky; top: 110px">
+<span class="eyebrow olive">Tu viaje, a tu medida</span>
+<h2 class="serif h2" style="font-size: 68px; line-height: 0.98">Cada viajero es único. <span class="it" style="color: #56662E">Cada itinerario también.</span></h2>
+<p style="font-size: 17px; line-height: 1.65; color: #56616B">No vendemos un pasaje suelto: armamos el viaje completo, con una persona que te conoce y te responde de principio a fin.</p>
+<div><button class="btn btn-ink" @click="goContact">Comenzar consulta <svg class="ic arr" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button></div>
+</div>
+<div class="stagger" style="display: flex; flex-direction: column; gap: 16px">
+<div class="step fx" style="display: flex; gap: 28px; padding: 32px; border-radius: 24px; border: 1px solid rgba(10,10,11,0.08); background: #ffffff">
+<span class="serif" style="font-size: 64px; line-height: 0.8; color: #778C43">01</span>
+<div style="display: flex; flex-direction: column; gap: 10px"><h3 style="font-size: 22px">Contanos tu visión</h3><p style="font-size: 16px; line-height: 1.6; color: #56616B">Hablamos de tus sueños, preferencias, fechas y presupuesto para entender exactamente qué buscás.</p></div>
+</div>
+<div class="step fx" style="display: flex; gap: 28px; padding: 32px; border-radius: 24px; border: 1px solid rgba(10,10,11,0.08); background: #ffffff">
+<span class="serif" style="font-size: 64px; line-height: 0.8; color: #778C43">02</span>
+<div style="display: flex; flex-direction: column; gap: 10px"><h3 style="font-size: 22px">Diseñamos tu itinerario</h3><p style="font-size: 16px; line-height: 1.6; color: #56616B">Te enviamos una propuesta a medida con vuelos, hoteles, traslados y experiencias. La ajustamos juntos hasta que sea exactamente tu viaje.</p></div>
+</div>
+<div class="step fx" style="display: flex; gap: 28px; padding: 32px; border-radius: 24px; border: 1px solid rgba(10,10,11,0.08); background: #ffffff">
+<span class="serif" style="font-size: 64px; line-height: 0.8; color: #778C43">03</span>
+<div style="display: flex; flex-direction: column; gap: 10px"><h3 style="font-size: 22px">Disfrutá tu experiencia</h3><p style="font-size: 16px; line-height: 1.6; color: #56616B">Viajá con todo resuelto y asistencia 24/7. Y cuando vuelvas, seguimos en contacto para el próximo.</p></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="wrap fx" style="padding-top: 110px">
+<div class="split" style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0; border-radius: 28px; overflow: hidden; background: #7CC4EC">
+<div style="padding: 64px; display: flex; flex-direction: column; gap: 20px; justify-content: center">
+<span class="eyebrow" style="color: #0A0A0B">Juegos DM</span>
+<h2 class="serif h2" style="font-size: 60px; line-height: 1">Jugá y ganá hasta <span class="it">10% de descuento</span></h2>
+<p style="font-size: 17px; line-height: 1.6; color: #10293A">Encontrá los pares en el memotest de destinos o descubrí con un test de cuatro preguntas cuál es tu viaje ideal.</p>
+<div style="display: flex; gap: 12px; flex-wrap: wrap">
+<button class="btn btn-ink" @click="goMemo">Jugar memotest</button>
+<button class="btn btn-line" @click="goQuiz">Hacer el test</button>
+</div>
+</div>
+<div class="fx r" style="position: relative; min-height: 380px; display: flex; align-items: center; justify-content: center; gap: 18px; padding: 40px">
+<div class="float" style="--r: -6deg; width: 150px; height: 200px; border-radius: 18px; overflow: hidden; transform: rotate(-6deg); box-shadow: 0 24px 50px -20px rgba(10,10,11,0.5); position: relative"><img :src="teaser.a.img" :alt="teaser.a.alt" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block"></div>
+<div class="float" style="--r: 3deg; width: 150px; height: 200px; border-radius: 18px; background: #778C43; transform: rotate(3deg); display: flex; align-items: center; justify-content: center; box-shadow: 0 24px 50px -20px rgba(10,10,11,0.5); animation-delay: 0.8s"><span class="serif" style="font-size: 54px; color: #ffffff">DM</span></div>
+<div class="float" style="--r: 8deg; width: 150px; height: 200px; border-radius: 18px; overflow: hidden; transform: rotate(8deg); box-shadow: 0 24px 50px -20px rgba(10,10,11,0.5); position: relative; animation-delay: 1.6s"><img :src="teaser.b.img" :alt="teaser.b.alt" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block"></div>
+</div>
+</div>
+</section>
+
+<section class="wrap fx" style="padding-top: 120px">
+<div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 44px; max-width: 640px">
+<span class="eyebrow">Lo que dicen nuestros viajeros</span>
+<h2 class="serif h2" style="font-size: 64px; line-height: 1">Historias que <span class="it">vuelven con ellos</span></h2>
+</div>
+<div class="gauto">
+<figure class="card fx" style="margin: 0; padding: 32px; border-radius: 24px; background: #EAF4FA; display: flex; flex-direction: column; gap: 28px">
+<span class="serif" style="font-size: 80px; line-height: 0.5; color: #7CC4EC">“</span>
+<blockquote class="serif" style="margin: 0; font-size: 27px; line-height: 1.25">El viaje a la Costa Amalfitana superó todas mis expectativas. La atención al detalle de DM Viajes es inigualable.</blockquote>
+<figcaption style="margin-top: auto; display: flex; align-items: center; gap: 12px"><span style="width: 44px; height: 44px; border-radius: 50%; background: #7CC4EC; color: #0A0A0B; display: flex; align-items: center; justify-content: center; font-weight: 700">LT</span><span style="display: flex; flex-direction: column"><strong style="font-size: 15px">Lucía Torres</strong><span style="font-size: 13px; color: #56616B">Viaje a Europa</span></span></figcaption>
+</figure>
+<figure class="card fx" style="margin: 0; padding: 32px; border-radius: 24px; background: #EEF2E3; color: #0A0A0B; display: flex; flex-direction: column; gap: 28px">
+<span class="serif" style="font-size: 80px; line-height: 0.5; color: #778C43">“</span>
+<blockquote class="serif" style="margin: 0; font-size: 27px; line-height: 1.25">Nuestra luna de miel en Maldivas fue perfecta. No tuvimos que preocuparnos por nada, solo disfrutar.</blockquote>
+<figcaption style="margin-top: auto; display: flex; align-items: center; gap: 12px"><span style="width: 44px; height: 44px; border-radius: 50%; background: #778C43; color: #ffffff; display: flex; align-items: center; justify-content: center; font-weight: 700">MS</span><span style="display: flex; flex-direction: column"><strong style="font-size: 15px">Martín y Sofía</strong><span style="font-size: 13px; color: #56616B">Viaje a Asia</span></span></figcaption>
+</figure>
+<figure class="card fx" style="margin: 0; padding: 32px; border-radius: 24px; background: #EAF4FA; display: flex; flex-direction: column; gap: 28px">
+<span class="serif" style="font-size: 80px; line-height: 0.5; color: #7CC4EC">“</span>
+<blockquote class="serif" style="margin: 0; font-size: 27px; line-height: 1.25">Organizar un viaje para 6 personas parecía imposible, pero nos armaron un itinerario en Disney donde todos fuimos felices.</blockquote>
+<figcaption style="margin-top: auto; display: flex; align-items: center; gap: 12px"><span style="width: 44px; height: 44px; border-radius: 50%; background: #7CC4EC; color: #0A0A0B; display: flex; align-items: center; justify-content: center; font-weight: 700">FR</span><span style="display: flex; flex-direction: column"><strong style="font-size: 15px">Familia Rossi</strong><span style="font-size: 13px; color: #56616B">Viaje a Norteamérica</span></span></figcaption>
+</figure>
+</div>
+</section>
+
+<section class="wrap fx" style="padding-top: 120px">
+<div class="split" style="display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); gap: 64px">
+<div style="display: flex; flex-direction: column; gap: 14px">
+<span class="eyebrow olive">Preguntas frecuentes</span>
+<h2 class="serif h2" style="font-size: 64px; line-height: 1">Todo lo que <span class="it">querés saber</span></h2>
+<p style="font-size: 16px; line-height: 1.6; color: #56616B">¿Tenés otra duda? Escribinos y te responde un asesor, no un bot.</p>
+<div><button class="btn btn-line" @click="goContact" style="margin-top: 8px">Hacer una consulta</button></div>
+</div>
+<div class="stagger" style="border-top: 1px solid #E2E9EE">
+<template v-for="(f, $index) in faqs">
+<div :class="`faq fx ${f.cls}`">
+<button class="faq-q" @click="f.toggle" :aria-expanded="f.expanded">{{ f.q }}<span class="plus"><svg class="ic" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg></span></button>
+<div class="faq-body"><div><p style="padding: 0 64px 28px 0; font-size: 16px; line-height: 1.7; color: #56616B">{{ f.a }}</p></div></div>
+</div>
+</template>
+</div>
+</div>
+</section>
+
+<section class="wrap fx" style="padding-top: 120px">
+<div class="fx z" style="position: relative; overflow: hidden; border-radius: 28px; min-height: 420px; display: flex; align-items: center; justify-content: center; text-align: center; color: #ffffff; background: #0A0A0B">
+<div style="position: absolute; inset: 0"><img :src="ctaArt.img" :alt="ctaArt.alt" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block"></div>
+<div style="position: absolute; inset: 0; background: rgba(10,10,11,0.55)"></div>
+<div style="position: relative; display: flex; flex-direction: column; align-items: center; gap: 22px; padding: 64px 24px">
+<h2 class="serif h2" style="font-size: 76px; line-height: 0.95">¿Listo para tu <span class="it" style="color: #7CC4EC">próximo viaje?</span></h2>
+<p style="font-size: 18px; color: rgba(255,255,255,0.85); max-width: 520px">Te respondemos en menos de 24 horas hábiles, por el canal que prefieras.</p>
+<div style="display: flex; gap: 12px; flex-wrap: wrap; justify-content: center">
+<a class="btn btn-cel" :href="waLink" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.6A8.4 8.4 0 1 1 21 11.5z"></path></svg>Consultá por WhatsApp</a>
+<button class="btn btn-glass" @click="goContact">Completar el formulario</button>
+</div>
+</div>
+</div>
+</section>
+
+</div>
+</template>
+
+<template v-if="isDestinos">
+<div class="view">
+<section class="wrap" style="padding-top: 80px; padding-bottom: 40px">
+<div class="split" style="display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 48px; align-items: end">
+<div style="display: flex; flex-direction: column; gap: 18px">
+<span class="eyebrow">Nuestros destinos</span>
+<h1 class="serif" style="font-size: 84px; line-height: 0.92; letter-spacing: -0.03em"><span class="word">El mundo,</span> <span class="word it" style="animation-delay: 0.15s">a tu manera</span></h1>
+</div>
+<p style="font-size: 18px; line-height: 1.6; color: #56616B">Dieciocho destinos que conocemos a fondo en seis regiones. Si el tuyo no está, lo diseñamos igual: para eso existe el viaje a medida.</p>
+</div>
+<div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 48px">
+<template v-for="(c, $index) in dChips">
+<button :class="`chip ${c.cls}`" @click="c.pick">{{ c.label }} <span style="opacity: 0.55; margin-left: 4px">{{ c.count }}</span></button>
+</template>
+</div>
+</section>
+<section class="wrap" style="padding-bottom: 40px">
+<div class="gauto">
+<template v-for="(d, $index) in dests">
+<article class="card fx" style="display: flex; flex-direction: column; border-radius: 24px; overflow: hidden; border: 1px solid #E2E9EE; background: #ffffff">
+<div style="position: relative; height: 240px; overflow: hidden">
+<div class="zoom" style="position: absolute; inset: 0"><img :src="d.art.img" :alt="d.art.alt" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block"></div>
+<span style="position: absolute; top: 16px; left: 16px; height: 30px; padding: 0 12px; border-radius: 999px; background: rgba(255,255,255,0.92); display: inline-flex; align-items: center; font-size: 12px; font-weight: 700">{{ d.regionName }}</span>
+</div>
+<div style="padding: 24px; display: flex; flex-direction: column; gap: 12px; flex-grow: 1">
+<span style="font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #1B6A98">{{ d.country }}</span>
+<h3 class="serif" style="font-size: 34px; line-height: 1">{{ d.name }}</h3>
+<p style="font-size: 15px; line-height: 1.6; color: #56616B">{{ d.blurb }}</p>
+<div style="display: flex; align-items: center; gap: 8px; font-size: 13px; color: #56616B"><svg class="ic" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>Mejor época: <strong style="color: #0A0A0B">{{ d.best }}</strong></div>
+<div style="margin-top: auto; padding-top: 16px; border-top: 1px solid #E2E9EE; display: flex; justify-content: space-between; align-items: center; gap: 12px">
+<span style="font-size: 17px; font-weight: 700">{{ d.priceTxt }}</span>
+<button class="btn btn-line" @click="d.cta" style="min-height: 44px; padding: 0 18px; font-size: 14px">{{ d.ctaLabel }} <svg class="ic arr" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
+</div>
+</div>
+</article>
+</template>
+</div>
+</section>
+<section class="wrap" style="padding-top: 60px">
+<div style="border-radius: 28px; background: #F2F7FA; padding: 56px; display: flex; justify-content: space-between; align-items: center; gap: 32px; flex-wrap: wrap">
+<div style="display: flex; flex-direction: column; gap: 10px; max-width: 620px">
+<h2 class="serif" style="font-size: 48px; line-height: 1">¿Soñás con otro destino?</h2>
+<p style="font-size: 17px; line-height: 1.6; color: #56616B">Contanos a dónde querés ir y lo diseñamos desde cero, con la misma atención que a cualquiera de nuestros paquetes.</p>
+</div>
+<button class="btn btn-ink" @click="goContact">Pedir un viaje a medida <svg class="ic arr" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
+</div>
+</section>
+</div>
+</template>
+
+<template v-if="isPaquetes">
+<div class="view">
+<section class="wrap" style="padding-top: 80px">
+<div class="split" style="display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 48px; align-items: end">
+<div style="display: flex; flex-direction: column; gap: 18px">
+<span class="eyebrow">Paquetes</span>
+<h1 class="serif" style="font-size: 84px; line-height: 0.92; letter-spacing: -0.03em"><span class="word">Salidas</span> <span class="word it" style="animation-delay: 0.15s">con todo resuelto</span></h1>
+</div>
+<p style="font-size: 18px; line-height: 1.6; color: #56616B">Aéreos desde Buenos Aires, alojamiento, traslados y asistencia al viajero. Elegí uno como base y lo adaptamos a vos.</p>
+</div>
+</section>
+<section class="wrap" style="position: sticky; top: 76px; z-index: 20; padding-top: 28px; padding-bottom: 16px; background: rgba(255,255,255,0.9); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px)">
+<div class="filters" style="padding-bottom: 16px; border-bottom: 1px solid #E2E9EE">
+<template v-for="(d, $index) in fdds">
+<div class="ddw">
+<button :class="`dd ${d.cls}`" @click="d.toggle" aria-haspopup="listbox" :aria-expanded="d.exp"><span class="dd-k">{{ d.label }}</span><span class="dd-v">{{ d.value }}</span><svg class="ic chev" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></button>
+<template v-if="d.open">
+<div :class="`dd-menu ${d.align}`" role="listbox" :aria-label="d.label">
+<template v-for="(o, $index) in d.opts"><button :class="`dd-opt ${o.cls}`" role="option" :aria-selected="o.sel" @click="o.pick"><span>{{ o.label }}</span><svg class="ic ck" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></button></template>
+</div>
+</template>
+</div>
+</template>
+<template v-if="hasFilters"><button class="linkbtn" @click="clearFilters">Limpiar filtros</button></template>
+<div style="margin-left: auto; display: flex; align-items: center; gap: 14px">
+<span style="font-size: 14px; font-weight: 600; color: #56616B">{{ pkgCount }}</span>
+<template v-for="(d, $index) in sdds">
+<div class="ddw">
+<button :class="`dd ${d.cls}`" @click="d.toggle" aria-haspopup="listbox" :aria-expanded="d.exp"><span class="dd-k">{{ d.label }}</span><span class="dd-v">{{ d.value }}</span><svg class="ic chev" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></button>
+<template v-if="d.open">
+<div :class="`dd-menu ${d.align}`" role="listbox" :aria-label="d.label">
+<template v-for="(o, $index) in d.opts"><button :class="`dd-opt ${o.cls}`" role="option" :aria-selected="o.sel" @click="o.pick"><span>{{ o.label }}</span><svg class="ic ck" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></button></template>
+</div>
+</template>
+</div>
+</template>
+</div>
+</div>
+</section>
+<section class="wrap" style="padding-top: 24px">
+<template v-if="noResults">
+<div class="panel" style="padding: 64px; border-radius: 28px; background: #F2F7FA; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 16px">
+<h3 class="serif" style="font-size: 40px">No hay paquetes con esa combinación</h3>
+<p style="font-size: 16px; color: #56616B; max-width: 460px">Probá con otros filtros o pedinos uno a medida: justamente es lo que mejor hacemos.</p>
+<div style="display: flex; gap: 12px; flex-wrap: wrap; justify-content: center"><button class="btn btn-line" @click="clearFilters">Limpiar filtros</button><button class="btn btn-ink" @click="goContact">Pedir un viaje a medida</button></div>
+</div>
+</template>
+<div class="gauto">
+<template v-for="(p, $index) in pkgs">
+<article class="card panel" style="display: flex; flex-direction: column; border-radius: 24px; overflow: hidden; background: #ffffff; border: 1px solid #E2E9EE">
+<div style="position: relative; height: 220px; overflow: hidden">
+<div class="zoom" style="position: absolute; inset: 0"><img :src="p.art.img" :alt="p.art.alt" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block"></div>
+<span style="position: absolute; top: 16px; left: 16px; height: 30px; padding: 0 12px; border-radius: 999px; background: rgba(255,255,255,0.92); display: inline-flex; align-items: center; font-size: 12px; font-weight: 700">{{ p.regionName }}</span>
+<span style="position: absolute; top: 16px; right: 16px; height: 30px; padding: 0 12px; border-radius: 999px; background: #56662E; color: #ffffff; display: inline-flex; align-items: center; font-size: 12px; font-weight: 700">{{ p.nightsTxt }}</span>
+</div>
+<div style="padding: 22px; display: flex; flex-direction: column; gap: 14px; flex-grow: 1">
+<h3 class="serif" style="font-size: 30px; line-height: 1.05">{{ p.title }}</h3>
+<p style="font-size: 14px; line-height: 1.55; color: #56616B">{{ p.route }}</p>
+<div style="display: flex; gap: 6px; flex-wrap: wrap">
+<template v-for="(t, $index) in p.tags"><span class="tag">{{ t.t }}</span></template>
+</div>
+<div style="margin-top: auto; padding-top: 14px; border-top: 1px solid #E2E9EE; display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap">
+<div style="display: flex; flex-direction: column">
+<span style="font-size: 12px; color: #56616B">Desde, por persona</span>
+<span style="font-size: 22px; font-weight: 700">{{ p.priceTxt }}</span>
+</div>
+<div style="display: flex; gap: 8px">
+<button class="btn btn-line" @click="p.open" style="min-height: 44px; padding: 0 16px; font-size: 14px">Itinerario</button>
+<button class="btn btn-ink" @click="p.quote" style="min-height: 44px; padding: 0 16px; font-size: 14px">Cotizar</button>
+</div>
+</div>
+</div>
+</article>
+</template>
+</div>
+<p style="margin-top: 28px; font-size: 13px; line-height: 1.6; color: #56616B">Precios de referencia por persona en base doble, con salida desde Buenos Aires. Sujetos a disponibilidad y a la fecha de viaje; tu asesor confirma el valor final al cotizar.</p>
+</section>
+</div>
+</template>
+
+<template v-if="isNosotros">
+<div class="view">
+<section class="wrap" style="padding-top: 72px">
+<div class="split" style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 56px; align-items: center">
+<div style="display: flex; flex-direction: column; gap: 24px">
+<span class="eyebrow olive">Sobre nosotros</span>
+<h1 class="serif" style="font-size: 76px; line-height: 0.95"><span class="word">Planificamos</span> <span class="word it" style="animation-delay: 0.12s; color: #1B6A98">con vos,</span> <span class="word" style="animation-delay: 0.24s">no por vos.</span></h1>
+<p style="font-size: 18px; line-height: 1.6; color: #56616B; max-width: 460px">Somos una agencia argentina de viajes a medida. Escuchamos cómo querés viajar y te acompañamos en todo el camino.</p>
+<div style="display: flex; gap: 12px; flex-wrap: wrap"><button class="btn btn-ink" @click="goContact">Hablar con un asesor</button><button class="btn btn-line" @click="goPaquetes">Ver paquetes</button></div>
+</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: 230px 230px; gap: 14px">
+<div class="card fx z" style="grid-row: span 2; position: relative; border-radius: 24px; overflow: hidden"><img :src="about.a.img" :alt="about.a.alt" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block"></div>
+<div class="card fx z" style="position: relative; border-radius: 24px; overflow: hidden"><img :src="about.b.img" :alt="about.b.alt" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block"></div>
+<div class="card fx z" style="position: relative; border-radius: 24px; overflow: hidden"><img :src="about.c.img" :alt="about.c.alt" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block"></div>
+</div>
+</div>
+</section>
+<section class="wrap fx" style="padding-top: 110px">
+<h2 class="serif h2" style="font-size: 54px; line-height: 1; margin-bottom: 36px">Te acompañamos <span class="it">de principio a fin</span></h2>
+<div class="stagger" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px"><div class="step fx" style="padding: 32px; border-radius: 24px; background: #EEF2E3; display: flex; flex-direction: column; gap: 12px"><span style="font-size: 12px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #56662E">Antes</span><h3 class="serif" style="font-size: 30px; line-height: 1.05">Te escuchamos</h3><p style="font-size: 15px; line-height: 1.55; color: #56616B">Entendemos qué buscás y diseñamos tu itinerario.</p></div><div class="step fx" style="padding: 32px; border-radius: 24px; background: #EAF4FA; display: flex; flex-direction: column; gap: 12px"><span style="font-size: 12px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #56662E">Durante</span><h3 class="serif" style="font-size: 30px; line-height: 1.05">Estamos a un mensaje</h3><p style="font-size: 15px; line-height: 1.55; color: #56616B">Asistencia 24/7 mientras viajás.</p></div><div class="step fx" style="padding: 32px; border-radius: 24px; background: #F2F7FA; display: flex; flex-direction: column; gap: 12px"><span style="font-size: 12px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #56662E">Después</span><h3 class="serif" style="font-size: 30px; line-height: 1.05">Seguimos en contacto</h3><p style="font-size: 15px; line-height: 1.55; color: #56616B">Te avisamos de nuevos destinos para tu próximo viaje.</p></div></div>
+</section>
+<section class="wrap fx" style="padding-top: 110px">
+<h2 class="serif h2" style="font-size: 54px; line-height: 1; margin-bottom: 36px">Lo que <span class="it">nos guía</span></h2>
+<div class="stagger" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 28px"><div class="value fx" style="padding-top: 24px; border-top: 2px solid #778C43; display: flex; flex-direction: column; gap: 10px"><svg class="ic" viewBox="0 0 24 24" width="26" height="26" aria-hidden="true" style="color: #56662E"><path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6z"></path><path d="M8.5 12l2.5 2.5 4.5-5"></path></svg><h3 style="font-size: 20px; font-weight: 600">Confianza</h3><p style="font-size: 15px; line-height: 1.5; color: #56616B">Honestidad en cada etapa.</p></div><div class="value fx" style="padding-top: 24px; border-top: 2px solid #778C43; display: flex; flex-direction: column; gap: 10px"><svg class="ic" viewBox="0 0 24 24" width="26" height="26" aria-hidden="true" style="color: #56662E"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"></path><circle cx="16" cy="7" r="2"></circle><circle cx="10" cy="17" r="2"></circle></svg><h3 style="font-size: 20px; font-weight: 600">Personalización</h3><p style="font-size: 15px; line-height: 1.5; color: #56616B">Cada viaje, a tu medida.</p></div><div class="value fx" style="padding-top: 24px; border-top: 2px solid #778C43; display: flex; flex-direction: column; gap: 10px"><svg class="ic" viewBox="0 0 24 24" width="26" height="26" aria-hidden="true" style="color: #56662E"><path d="M12 12c-2-2.5-4-4-6-4a4 4 0 0 0 0 8c2 0 4-1.5 6-4zm0 0c2 2.5 4 4 6 4a4 4 0 0 0 0-8c-2 0-4 1.5-6 4z"></path></svg><h3 style="font-size: 20px; font-weight: 600">Compromiso</h3><p style="font-size: 15px; line-height: 1.5; color: #56616B">Seguimiento real, no una venta.</p></div><div class="value fx" style="padding-top: 24px; border-top: 2px solid #778C43; display: flex; flex-direction: column; gap: 10px"><svg class="ic" viewBox="0 0 24 24" width="26" height="26" aria-hidden="true" style="color: #56662E"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"></path></svg><h3 style="font-size: 20px; font-weight: 600">Cercanía</h3><p style="font-size: 15px; line-height: 1.5; color: #56616B">Trato humano, siempre.</p></div><div class="value fx" style="padding-top: 24px; border-top: 2px solid #778C43; display: flex; flex-direction: column; gap: 10px"><svg class="ic" viewBox="0 0 24 24" width="26" height="26" aria-hidden="true" style="color: #56662E"><path d="M4 17l6-6 4 4 6-7M15 8h5v5"></path></svg><h3 style="font-size: 20px; font-weight: 600">Mejora continua</h3><p style="font-size: 15px; line-height: 1.5; color: #56616B">Cada vez más simple.</p></div></div>
+</section>
+<section class="wrap fx" style="padding-top: 110px">
+<div style="border-radius: 28px; background: #EAF4FA; padding: 56px; display: flex; justify-content: space-between; align-items: center; gap: 32px; flex-wrap: wrap">
+<h2 class="serif" style="font-size: 44px; line-height: 1">¿Planeamos <span class="it">tu próximo viaje?</span></h2>
+<div style="display: flex; gap: 12px; flex-wrap: wrap"><a class="btn btn-olive" :href="waLink" target="_blank" rel="noopener">Escribinos por WhatsApp</a><button class="btn btn-ink" @click="goContact">Pedir cotización</button></div>
+</div>
+</section>
+</div>
+</template>
+
+<template v-if="isJuegos">
+<div class="view">
+<section class="wrap" style="padding-top: 72px">
+<div style="border-radius: 28px; background: #EAF4FA; color: #0A0A0B; padding: 56px; display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; flex-wrap: wrap">
+<div style="display: flex; flex-direction: column; gap: 16px; max-width: 700px">
+<span class="eyebrow olive">Juegos DM</span>
+<h1 class="serif" style="font-size: 72px; line-height: 0.95"><span class="word">Jugá, aprendé</span> <span class="word it" style="animation-delay: 0.15s; color: #1B6A98">y ganá descuentos</span></h1>
+<p style="font-size: 17px; line-height: 1.6; color: #56616B">Completá el memotest para ganar un código de descuento, o hacé el test y descubrí qué viaje va con vos.</p>
+</div>
+<div style="display: flex; gap: 4px; padding: 5px; border-radius: 999px; background: rgba(255,255,255,0.65)" role="group" aria-label="Elegir juego">
+<button :class="`tab ${tabMemo}`" @click="goMemo">Memotest</button>
+<button :class="`tab ${tabQuiz}`" @click="goQuiz">Tu viaje ideal</button>
+</div>
+</div>
+</section>
+
+<template v-if="isMemo">
+<section class="wrap panel" style="padding-top: 32px">
+<div class="split" style="display: grid; grid-template-columns: minmax(0, 8fr) minmax(0, 4fr); gap: 24px; align-items: start">
+<div class="memo-grid">
+<template v-for="(m, $index) in memoCards">
+<button :class="`memo ${m.cls}`" @click="m.flip" :aria-label="m.label">
+<span class="memo-inner">
+<span class="face" style="background: #778C43; display: flex; align-items: center; justify-content: center">
+<span style="position: absolute; inset: 10px; border-radius: 10px; border: 1px dashed rgba(255,255,255,0.55)"></span>
+<span class="serif" style="font-size: 40px; color: #ffffff">DM</span>
+</span>
+<span class="face front" style="background: #ffffff">
+<span style="position: absolute; inset: 0; display: block"><img :src="m.art.img" :alt="m.art.alt" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block"></span>
+<span style="position: absolute; left: 8px; right: 8px; bottom: 8px; height: 30px; border-radius: 999px; background: rgba(255,255,255,0.94); color: #0A0A0B; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700">{{ m.name }}</span>
+</span>
+</span>
+</button>
+</template>
+</div>
+<aside style="position: sticky; top: 100px; display: flex; flex-direction: column; gap: 16px">
+<div style="padding: 28px; border-radius: 24px; background: #F2F7FA; display: flex; flex-direction: column; gap: 20px">
+<h2 class="serif" style="font-size: 34px; line-height: 1">Memotest de destinos</h2>
+<p style="font-size: 15px; line-height: 1.6; color: #56616B">Encontrá los 8 pares en 35 movimientos o menos. Cuantos menos uses, mayor el descuento.</p>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+<div style="padding: 16px; border-radius: 16px; background: #ffffff"><span style="font-size: 12px; font-weight: 700; color: #56616B">Movimientos</span><div style="font-size: 30px; font-weight: 700">{{ moves }}<span style="font-size: 16px; color: #56616B">/35</span></div></div>
+<div style="padding: 16px; border-radius: 16px; background: #ffffff"><span style="font-size: 12px; font-weight: 700; color: #56616B">Pares</span><div style="font-size: 30px; font-weight: 700">{{ pairs }}<span style="font-size: 16px; color: #56616B">/8</span></div></div>
+</div>
+<div style="height: 8px; border-radius: 8px; background: #ffffff; overflow: hidden"><div :style="`height: 100%; width: ${movesPct}%; background: ${barColor}; border-radius: 8px; transition: width .4s ease, background .4s`"></div></div>
+<div style="display: flex; flex-direction: column; gap: 6px; font-size: 14px">
+<div style="display: flex; justify-content: space-between"><span>Hasta 16 movimientos</span><strong>10% off</strong></div>
+<div style="display: flex; justify-content: space-between"><span>17 a 24 movimientos</span><strong>7% off</strong></div>
+<div style="display: flex; justify-content: space-between"><span>25 a 35 movimientos</span><strong>5% off</strong></div>
+</div>
+<button class="btn btn-line" @click="resetMemo"><svg class="ic" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.3 5.7M20 5v6h-6"></path></svg>Reiniciar</button>
+</div>
+<template v-if="memoWon">
+<div class="panel" style="padding: 28px; border-radius: 24px; background: #7CC4EC; display: flex; flex-direction: column; gap: 14px">
+<span class="eyebrow" style="color: #0A0A0B">¡Ganaste!</span>
+<h3 class="serif" style="font-size: 40px; line-height: 1">{{ prize.pct }}% de descuento</h3>
+<p style="font-size: 14px; line-height: 1.55">Lo lograste en {{ moves }} movimientos. Presentá este código al pedir tu cotización.</p>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 8px 8px 18px; border-radius: 14px; background: #ffffff"><strong style="font-size: 18px; letter-spacing: 0.08em">{{ prize.code }}</strong><button class="btn btn-ink" @click="copyCode" style="min-height: 40px; padding: 0 14px; font-size: 13px"><svg class="ic" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h8"></path></svg>{{ copyLabel }}</button></div>
+<button class="btn btn-ink" @click="useCode">Usarlo en mi cotización</button>
+<p style="font-size: 12px; color: #10293A">Válido por 30 días. Sujeto a términos y condiciones.</p>
+</div>
+</template>
+<template v-if="memoLost">
+<div class="panel" style="padding: 28px; border-radius: 24px; background: #EEF2E3; color: #0A0A0B; display: flex; flex-direction: column; gap: 14px">
+<h3 class="serif" style="font-size: 36px; line-height: 1">Se terminaron los movimientos</h3>
+<p style="font-size: 14px; line-height: 1.55; color: #56616B">Encontraste {{ pairs }} de 8 pares. Mezclamos las cartas otra vez: probá de nuevo.</p>
+<button class="btn btn-ink" @click="resetMemo">Jugar otra vez</button>
+</div>
+</template>
+</aside>
+</div>
+</section>
+</template>
+
+<template v-if="isQuiz">
+<section class="wrap panel" style="padding-top: 32px">
+<template v-if="quizOn">
+<div style="max-width: 900px; margin: 0 auto; padding: 48px; border-radius: 28px; background: #F2F7FA; display: flex; flex-direction: column; gap: 28px">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 16px">
+<span class="eyebrow">Pregunta {{ qNum }} de 4</span>
+<div style="display: flex; gap: 6px">
+<template v-for="(st, $index) in qSteps"><span :style="`width: 44px; height: 6px; border-radius: 6px; background: ${st.bg}; transition: background .4s`"></span></template>
+</div>
+</div>
+<h2 class="serif h2" style="font-size: 56px; line-height: 1">{{ qCur.q }}</h2>
+<div class="two" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+<template v-for="(o, $index) in qOpts">
+<button class="opt" @click="o.pick"><span style="font-size: 19px; font-weight: 700">{{ o.label }}</span><span style="font-size: 14px; color: #56616B">{{ o.desc }}</span></button>
+</template>
+</div>
+<template v-if="qCanBack"><div><button class="btn btn-line" @click="qBack" style="min-height: 44px">Volver</button></div></template>
+</div>
+</template>
+<template v-if="quizDone">
+<div class="panel" style="display: flex; flex-direction: column; gap: 24px">
+<div class="split" style="display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); border-radius: 28px; overflow: hidden; background: #F2F7FA; color: #0A0A0B">
+<div style="position: relative; min-height: 420px"><img :src="qTop.art.img" :alt="qTop.art.alt" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block"></div>
+<div style="padding: 44px; display: flex; flex-direction: column; gap: 16px; justify-content: center">
+<span class="eyebrow olive">Tu viaje ideal es</span>
+<h2 class="serif" style="font-size: 56px; line-height: 0.98">{{ qTop.title }}</h2>
+<p style="font-size: 16px; line-height: 1.6; color: #56616B">{{ qTop.route }}</p>
+<div style="display: flex; gap: 20px; font-size: 14px"><span><strong style="font-size: 22px">{{ qTop.priceTxt }}</strong> por persona</span><span style="color: #56616B">{{ qTop.nightsTxt }}</span></div>
+<div style="display: flex; gap: 10px; flex-wrap: wrap"><button class="btn btn-ink" @click="qTop.quote">Cotizar este viaje</button><button class="btn btn-line" @click="qTop.open">Ver itinerario</button></div>
+</div>
+</div>
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap">
+<h3 class="serif" style="font-size: 32px">También te pueden gustar</h3>
+<button class="btn btn-line" @click="qReset" style="min-height: 44px"><svg class="ic" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.3 5.7M20 5v6h-6"></path></svg>Hacer el test otra vez</button>
+</div>
+<div class="gauto">
+<template v-for="(p, $index) in qAlts">
+<button class="card" @click="p.open" style="display: flex; gap: 0; padding: 0; border-radius: 22px; overflow: hidden; border: 1px solid #E2E9EE; background: #ffffff; text-align: left; color: #0A0A0B">
+<span style="position: relative; width: 140px; flex-shrink: 0; overflow: hidden; display: block"><img :src="p.art.img" :alt="p.art.alt" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block"></span>
+<span style="padding: 20px; display: flex; flex-direction: column; gap: 6px"><span style="font-size: 12px; font-weight: 700; color: #1B6A98">{{ p.regionName }} · {{ p.nightsTxt }}</span><span class="serif" style="font-size: 26px; line-height: 1.05">{{ p.title }}</span><span style="font-size: 15px; font-weight: 700">{{ p.priceTxt }}</span></span>
+</button>
+</template>
+</div>
+</div>
+</template>
+</section>
+</template>
+</div>
+</template>
+
+<template v-if="isContacto">
+<div class="view">
+<section class="wrap" style="padding-top: 80px">
+<div class="split" style="display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 56px; align-items: start">
+<div style="display: flex; flex-direction: column; gap: 28px">
+<div style="display: flex; flex-direction: column; gap: 18px">
+<span class="eyebrow">Contacto</span>
+<h1 class="serif" style="font-size: 76px; line-height: 0.92; letter-spacing: -0.03em"><span class="word">Hablemos de</span> <span class="word it" style="animation-delay: 0.15s; color: #1B6A98">tu próximo viaje</span></h1>
+<p style="font-size: 17px; line-height: 1.6; color: #56616B">¿Tenés dudas sobre un destino o querés un viaje a medida? Escribinos y un asesor te contacta en menos de 24 horas hábiles.</p>
+</div>
+<a class="btn btn-olive" :href="waLink" target="_blank" rel="noopener" style="align-self: flex-start"><svg class="ic" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.6A8.4 8.4 0 1 1 21 11.5z"></path></svg>Escribinos por WhatsApp</a>
+<div style="display: flex; flex-direction: column; gap: 2px; border-top: 1px solid #E2E9EE">
+<div style="display: flex; gap: 16px; padding: 20px 0; border-bottom: 1px solid #E2E9EE"><span style="width: 44px; height: 44px; border-radius: 50%; background: #EAF4FA; color: #1B6A98; display: flex; align-items: center; justify-content: center; flex-shrink: 0"><svg class="ic" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"></path><circle cx="12" cy="9.5" r="2.5"></circle></svg></span><div style="display: flex; flex-direction: column; gap: 4px"><strong style="font-size: 15px">Nuestras oficinas</strong><span style="font-size: 15px; color: #56616B; line-height: 1.5">Av. del Libertador 1234, Piso 5<br>Ciudad Autónoma de Buenos Aires, Argentina</span></div></div>
+<div style="display: flex; gap: 16px; padding: 20px 0; border-bottom: 1px solid #E2E9EE"><span style="width: 44px; height: 44px; border-radius: 50%; background: #EAF4FA; color: #1B6A98; display: flex; align-items: center; justify-content: center; flex-shrink: 0"><svg class="ic" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"></path></svg></span><div style="display: flex; flex-direction: column; gap: 4px"><strong style="font-size: 15px">Teléfono y WhatsApp</strong><span style="font-size: 15px; color: #56616B; line-height: 1.5">+54 11 4321-5678 · +54 9 11 6372-0022<br>Lunes a viernes, de 9 a 18 h</span></div></div>
+<div style="display: flex; gap: 16px; padding: 20px 0; border-bottom: 1px solid #E2E9EE"><span style="width: 44px; height: 44px; border-radius: 50%; background: #EAF4FA; color: #1B6A98; display: flex; align-items: center; justify-content: center; flex-shrink: 0"><svg class="ic" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3 7l9 6 9-6"></path></svg></span><div style="display: flex; flex-direction: column; gap: 4px"><strong style="font-size: 15px">Correo electrónico</strong><a href="mailto:diego.minici@dm-viajes.com" style="font-size: 15px">diego.minici@dm-viajes.com</a></div></div>
+<div style="display: flex; gap: 16px; padding: 20px 0"><span style="width: 44px; height: 44px; border-radius: 50%; background: #EAF4FA; color: #1B6A98; display: flex; align-items: center; justify-content: center; flex-shrink: 0"><svg class="ic" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg></span><div style="display: flex; flex-direction: column; gap: 4px"><strong style="font-size: 15px">Tiempo de respuesta</strong><span style="font-size: 15px; color: #56616B; line-height: 1.5">Hasta 24 horas hábiles. Durante el viaje, usá el número de emergencias de tu voucher.</span></div></div>
+</div>
+</div>
+
+<div style="border-radius: 28px; background: #F2F7FA; padding: 40px">
+<template v-if="formOn">
+<div style="display: flex; flex-direction: column; gap: 20px">
+<h2 class="serif" style="font-size: 40px; line-height: 1">Pedí tu cotización</h2>
+<div class="two" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px">
+<div :class="`field ${errCls.name}`"><label for="f-name">Nombre completo *</label><input id="f-name" type="text" autocomplete="name" :value="form.name" @input="on.name" placeholder="Tu nombre"><template v-if="errs.name"><span class="errmsg">Contanos tu nombre.</span></template></div>
+<div :class="`field ${errCls.email}`"><label for="f-email">Correo electrónico *</label><input id="f-email" type="email" autocomplete="email" :value="form.email" @input="on.email" placeholder="nombre@correo.com"><template v-if="errs.email"><span class="errmsg">Revisá el correo: parece incompleto.</span></template></div>
+<div class="field"><label for="f-phone">Teléfono (opcional)</label><input id="f-phone" type="tel" autocomplete="tel" :value="form.phone" @input="on.phone" placeholder="+54 9 11 ..."></div>
+<div class="field"><label for="f-date">Fecha aproximada</label><input id="f-date" type="month" :value="form.date" @input="on.date"></div>
+</div>
+<div class="field"><label for="f-interest">Destino o paquete de interés</label><input id="f-interest" type="text" :value="form.interest" @input="on.interest" placeholder="Por ejemplo: Italia en mayo, o todavía no sé"></div>
+<div class="field"><span style="font-size: 13px; font-weight: 700">Tipo de viaje</span>
+<div style="display: flex; gap: 8px; flex-wrap: wrap">
+<template v-for="(c, $index) in fTypes"><button :class="`chip cel ${c.cls}`" @click="c.pick" style="min-height: 40px; font-size: 13px">{{ c.label }}</button></template>
+</div>
+</div>
+<div class="two" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; align-items: end">
+<div class="field"><span style="font-size: 13px; font-weight: 700">Viajeros</span>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 52px; padding: 4px; border: 1px solid #D5DEE5; border-radius: 14px; background: #ffffff">
+<button class="iconbtn" @click="decT" aria-label="Quitar un viajero" style="border: 0; background: #F2F7FA"><svg class="ic" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h14"></path></svg></button>
+<strong style="font-size: 17px">{{ travelersTxt }}</strong>
+<button class="iconbtn" @click="incT" aria-label="Sumar un viajero" style="border: 0; background: #F2F7FA"><svg class="ic" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg></button>
+</div>
+</div>
+<div class="field"><label for="f-code">Código de descuento</label><input id="f-code" type="text" :value="form.code" @input="on.code" placeholder="Si ganaste uno en Juegos"></div>
+</div>
+<div :class="`field ${errCls.message}`"><label for="f-msg">¿Cómo podemos ayudarte? *</label><textarea id="f-msg" :value="form.message" @input="on.message" placeholder="Contanos qué tenés en mente: ritmo, intereses, algo que no quieras perderte..."></textarea><template v-if="errs.message"><span class="errmsg">Escribinos unas líneas sobre tu viaje.</span></template></div>
+<button class="btn btn-ink" @click="submit" style="min-height: 56px; font-size: 16px">Enviar consulta <svg class="ic arr" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
+<p style="font-size: 12px; color: #56616B">Usamos tus datos solo para responder tu consulta.</p>
+</div>
+</template>
+<template v-if="sent">
+<div class="panel" style="display: flex; flex-direction: column; gap: 20px; align-items: flex-start; padding: 24px 0">
+<span style="width: 72px; height: 72px; border-radius: 50%; background: #7CC4EC; color: #0A0A0B; display: flex; align-items: center; justify-content: center"><svg class="ic" viewBox="0 0 24 24" width="34" height="34" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></span>
+<h2 class="serif" style="font-size: 52px; line-height: 1">¡Gracias, {{ firstName }}!</h2>
+<p style="font-size: 17px; line-height: 1.6; color: #56616B">Recibimos tu consulta. Un asesor te va a escribir a <strong style="color: #0A0A0B">{{ form.email }}</strong> en menos de 24 horas hábiles.</p>
+<div style="width: 100%; padding: 20px; border-radius: 18px; background: #ffffff; display: flex; flex-direction: column; gap: 8px; font-size: 14px">
+<div style="display: flex; justify-content: space-between; gap: 12px"><span style="color: #56616B">Interés</span><strong style="text-align: right">{{ sumInterest }}</strong></div>
+<div style="display: flex; justify-content: space-between; gap: 12px"><span style="color: #56616B">Viajeros</span><strong>{{ travelersTxt }}</strong></div>
+<div style="display: flex; justify-content: space-between; gap: 12px"><span style="color: #56616B">Código</span><strong>{{ sumCode }}</strong></div>
+</div>
+<div style="display: flex; gap: 10px; flex-wrap: wrap"><a class="btn btn-olive" :href="waLink" target="_blank" rel="noopener">Acelerar por WhatsApp</a><button class="btn btn-line" @click="newForm">Enviar otra consulta</button></div>
+</div>
+</template>
+</div>
+</div>
+</section>
+</div>
+</template>
+
+</main>
+
+<footer style="margin: 120px 16px 16px; border-radius: 28px; background: #F2F7FA; color: #0A0A0B; padding: 80px 0 32px">
+<div class="wrap">
+<div class="split" style="display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 2fr) minmax(0, 3fr) minmax(0, 4fr); gap: 48px">
+<div style="display: flex; flex-direction: column; gap: 18px">
+<span style="display: flex; flex-direction: column; line-height: 0.82"><span class="serif" style="font-size: 52px">DM</span><span style="font-size: 13px; font-weight: 700; letter-spacing: 0.42em">VIAJES</span></span>
+<p style="font-size: 15px; line-height: 1.6; color: #56616B; max-width: 320px">Diseñamos experiencias de viaje personalizadas para transformar tu manera de ver el mundo.</p>
+</div>
+<div style="display: flex; flex-direction: column; gap: 4px">
+<span class="eyebrow olive" style="margin-bottom: 10px">Explorar</span>
+<template v-for="(n, $index) in nav"><button class="flink" @click="n.go">{{ n.label }}</button></template>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px; font-size: 15px; color: #56616B; line-height: 1.5">
+<span class="eyebrow olive" style="margin-bottom: 4px">Contacto</span>
+<span>Av. del Libertador 1234, Piso 5<br>Buenos Aires, Argentina</span>
+<span>+54 9 11 6372-0022</span>
+<a href="mailto:diego.minici@dm-viajes.com" style="color: #1B6A98">diego.minici@dm-viajes.com</a>
+</div>
+<div style="display: flex; flex-direction: column; gap: 14px">
+<span class="eyebrow olive">Newsletter</span>
+<p class="serif" style="font-size: 30px; line-height: 1.1">Inspiración y promociones exclusivas, una vez al mes.</p>
+<template v-if="newsForm">
+<div class="news" style="display: flex; gap: 8px">
+<input type="email" aria-label="Tu correo electrónico" placeholder="Tu correo" :value="news" @input="onNews">
+<button class="btn btn-cel" @click="subscribe">Suscribirme</button>
+</div>
+<template v-if="newsErr"><span style="font-size: 13px; font-weight: 600; color: #B42318">Ingresá un correo válido.</span></template>
+</template>
+<template v-if="newsOk">
+<div class="panel" style="display: flex; align-items: center; gap: 12px; padding: 14px 18px; border-radius: 16px; background: #EEF2E3; color: #48572A"><svg class="ic" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg><span style="font-size: 15px; font-weight: 700">¡Listo! Ya estás suscripto.</span></div>
+</template>
+</div>
+</div>
+<div style="margin-top: 72px; padding-top: 24px; border-top: 1px solid #D5DEE5; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; font-size: 13px; color: #56616B">
+<span>© 2026 DM Viajes. Todos los derechos reservados.</span>
+<span>Viajes a medida desde Argentina</span>
+</div>
+</div>
+</footer>
+
+<template v-if="hasPkg">
+<div style="position: fixed; inset: 0; z-index: 80; display: flex; align-items: center; justify-content: center; padding: 16px">
+<button class="backdrop" @click="closePkg" aria-label="Cerrar itinerario"></button>
+<div class="panel" role="dialog" aria-modal="true" :aria-label="pkg.title" style="position: relative; width: 100%; max-width: 980px; max-height: 92vh; overflow-y: auto; border-radius: 28px; background: #ffffff; box-shadow: 0 40px 120px -30px rgba(0,0,0,0.6)">
+<div style="position: relative; height: 280px; overflow: hidden">
+<img :src="pkg.art.img" :alt="pkg.art.alt" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block">
+<div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10,10,11,0) 30%, rgba(10,10,11,0.75) 100%)"></div>
+<button class="iconbtn" @click="closePkg" aria-label="Cerrar" style="position: absolute; top: 16px; right: 16px; border: 0"><svg class="ic" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+<div style="position: absolute; left: 36px; right: 36px; bottom: 28px; color: #ffffff; display: flex; flex-direction: column; gap: 8px">
+<span style="font-size: 12px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #BFE3F6">{{ pkg.regionName }} · {{ pkg.nightsTxt }}</span>
+<h2 class="serif" style="font-size: 56px; line-height: 0.98">{{ pkg.title }}</h2>
+</div>
+</div>
+<div class="split" style="display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 40px; padding: 36px">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<span class="eyebrow" style="margin-bottom: 14px">Itinerario</span>
+<template v-for="(dy, $index) in pkg.days">
+<div style="display: flex; gap: 18px">
+<div style="display: flex; flex-direction: column; align-items: center"><span style="width: 14px; height: 14px; border-radius: 50%; background: #ffffff; border: 3px solid #778C43; flex-shrink: 0; margin-top: 4px"></span><span style="width: 2px; flex-grow: 1; background: #E2E9EE"></span></div>
+<div style="padding-bottom: 22px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 12px; font-weight: 700; color: #1B6A98">{{ dy.d }}</span><strong style="font-size: 17px">{{ dy.t }}</strong><span style="font-size: 15px; line-height: 1.55; color: #56616B">{{ dy.x }}</span></div>
+</div>
+</template>
+</div>
+<div style="display: flex; flex-direction: column; gap: 18px">
+<div style="padding: 24px; border-radius: 20px; background: #F2F7FA; display: flex; flex-direction: column; gap: 12px">
+<span class="eyebrow">Incluye</span>
+<template v-for="(i, $index) in pkg.incl">
+<div style="display: flex; gap: 10px; align-items: flex-start"><svg class="ic" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" style="color: #778C43; margin-top: 2px"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg><span style="font-size: 15px; line-height: 1.5">{{ i.t }}</span></div>
+</template>
+</div>
+<div style="padding: 24px; border-radius: 20px; background: #EEF2E3; color: #0A0A0B; display: flex; flex-direction: column; gap: 14px">
+<span style="font-size: 13px; color: #56616B">Desde, por persona en base doble</span>
+<span style="font-size: 34px; font-weight: 700">{{ pkg.priceTxt }}</span>
+<button class="btn btn-ink" @click="pkg.quote">Cotizar este paquete</button>
+<span style="font-size: 12px; color: #56616B; line-height: 1.5">Lo ajustamos a tus fechas, hoteles preferidos y cantidad de viajeros.</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</template>
+
+<a class="fab" :href="waLink" target="_blank" rel="noopener" aria-label="Escribinos por WhatsApp"><svg class="ic" viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.6A8.4 8.4 0 1 1 21 11.5z"></path><path d="M9 10.5c.5 2 2 3.5 4.5 4.5"></path></svg></a>
+
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue@3.5.13/dist/vue.global.prod.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
