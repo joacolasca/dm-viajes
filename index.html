@@ -105,7 +105,7 @@
 </div>
 <button class="btn btn-line" @click="goDestinos">Ver todos los destinos <svg class="ic arr" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
 </div>
-<div class="bento">
+<div class="bento rail">
 <template v-for="(r, $index) in regions">
 <button :class="`region-card card fx z ${r.cls}`" @click="r.go" :aria-label="`Explorar ${r.name}`">
 <span class="zoom" style="position: absolute; inset: 0; display: block"><img :src="r.art.img" :alt="r.art.alt" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block"></span>
@@ -154,7 +154,7 @@
 </div>
 <button class="btn btn-line" @click="goPaquetes">Ver los {{ pkgTotal }} paquetes <svg class="ic arr" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
 </div>
-<div class="gauto">
+<div class="gauto rail">
 <template v-for="(p, $index) in featured">
 <article class="card fx" style="display: flex; flex-direction: column; border-radius: 24px; overflow: hidden; background: #ffffff; border: 1px solid #E2E9EE">
 <div style="position: relative; height: 220px; overflow: hidden">
@@ -219,7 +219,7 @@
 <button class="btn btn-line" @click="goQuiz">Hacer el test</button>
 </div>
 </div>
-<div class="fx r" style="position: relative; min-height: 380px; display: flex; align-items: center; justify-content: center; gap: 18px; padding: 40px">
+<div class="fx r teaser-cards" style="position: relative; min-height: 380px; display: flex; align-items: center; justify-content: center; gap: 18px; padding: 40px">
 <div class="float" style="--r: -6deg; width: 150px; height: 200px; border-radius: 18px; overflow: hidden; transform: rotate(-6deg); box-shadow: 0 24px 50px -20px rgba(10,10,11,0.5); position: relative"><img :src="teaser.a.img" :alt="teaser.a.alt" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block"></div>
 <div class="float" style="--r: 3deg; width: 150px; height: 200px; border-radius: 18px; background: #778C43; transform: rotate(3deg); display: flex; align-items: center; justify-content: center; box-shadow: 0 24px 50px -20px rgba(10,10,11,0.5); animation-delay: 0.8s"><span class="serif" style="font-size: 54px; color: #ffffff">DM</span></div>
 <div class="float" style="--r: 8deg; width: 150px; height: 200px; border-radius: 18px; overflow: hidden; transform: rotate(8deg); box-shadow: 0 24px 50px -20px rgba(10,10,11,0.5); position: relative; animation-delay: 1.6s"><img :src="teaser.b.img" :alt="teaser.b.alt" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block"></div>
@@ -232,7 +232,7 @@
 <span class="eyebrow">Lo que dicen nuestros viajeros</span>
 <h2 class="serif h2" style="font-size: 64px; line-height: 1">Historias que <span class="it">vuelven con ellos</span></h2>
 </div>
-<div class="gauto">
+<div class="gauto rail">
 <figure class="card fx" style="margin: 0; padding: 32px; border-radius: 24px; background: #EAF4FA; display: flex; flex-direction: column; gap: 28px">
 <span class="serif" style="font-size: 80px; line-height: 0.5; color: #7CC4EC">“</span>
 <blockquote class="serif" style="margin: 0; font-size: 27px; line-height: 1.25">El viaje a la Costa Amalfitana superó todas mis expectativas. La atención al detalle de DM Viajes es inigualable.</blockquote>

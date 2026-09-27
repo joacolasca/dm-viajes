@@ -103,7 +103,7 @@ var PKGS = [
 
 var HERO = ['grecia', 'maldivas', 'patagonia', 'japon', 'egipto'];
 var MEMO = ['egipto', 'peru', 'turquia', 'japon', 'grecia', 'maldivas', 'patagonia', 'nuevayork'];
-var FEATURED = ['p-italia', 'p-maldivas', 'p-peru', 'p-orlando'];
+var FEATURED = ['p-italia', 'p-maldivas', 'p-peru', 'p-orlando', 'p-grecia', 'p-egipto'];
 var NAV = [{ id: 'home', label: 'Inicio' }, { id: 'destinos', label: 'Destinos' }, { id: 'paquetes', label: 'Paquetes' }, { id: 'nosotros', label: 'Nosotros' }, { id: 'juegos', label: 'Juegos' }, { id: 'contacto', label: 'Contacto' }];
 var TYPES = ['todos', 'Playa', 'Luna de miel', 'Familia', 'Amigos', 'Aventura', 'Cultura', 'Ciudad'];
 var BUDGETS = [{ id: 'todos', label: 'Cualquier presupuesto' }, { id: 'b1', label: 'Hasta USD 2.500' }, { id: 'b2', label: 'USD 2.500 a 4.500' }, { id: 'b3', label: 'Más de USD 4.500' }];
