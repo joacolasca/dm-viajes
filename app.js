@@ -9,24 +9,24 @@ class DCLogic {
 }
 
 var ART = {
-  puntacana: { img: 'img/puntacana.jpg', alt: 'Vista aérea de una playa de Punta Cana' },
-  rivieramaya: { img: 'img/rivieramaya.jpg', alt: 'Palmera frente al mar turquesa de la Riviera Maya' },
-  aruba: { img: 'img/aruba.jpg', alt: 'Árbol sobre una playa de Aruba' },
-  italia: { img: 'img/italia.jpg', alt: 'Positano sobre la Costa Amalfitana' },
-  grecia: { img: 'img/grecia.jpg', alt: 'Casas blancas y cúpulas azules en Santorini' },
-  espana: { img: 'img/espana.jpg', alt: 'Plaza de España en Sevilla' },
-  maldivas: { img: 'img/maldivas.jpg', alt: 'Villas sobre el agua en Maldivas' },
-  japon: { img: 'img/japon.jpg', alt: 'Pagoda con el monte Fuji de fondo' },
-  tailandia: { img: 'img/tailandia.jpg', alt: 'Botes de madera en una playa de Tailandia' },
-  orlando: { img: 'img/orlando.jpg', alt: 'Castillo en un parque temático de Orlando' },
-  nuevayork: { img: 'img/nuevayork.jpg', alt: 'Puente de Brooklyn y el skyline de Nueva York' },
-  canada: { img: 'img/canada.jpg', alt: 'Lago entre las Montañas Rocosas de Canadá' },
-  egipto: { img: 'img/egipto.jpg', alt: 'Pirámide de Giza bajo el cielo azul' },
-  turquia: { img: 'img/turquia.jpg', alt: 'Globos aerostáticos sobre Capadocia' },
-  dubai: { img: 'img/dubai.jpg', alt: 'Skyline de Dubái' },
-  peru: { img: 'img/peru.jpg', alt: 'Ruinas de Machu Picchu entre montañas' },
-  patagonia: { img: 'img/patagonia.jpg', alt: 'Glaciar Perito Moreno en la Patagonia' },
-  brasil: { img: 'img/brasil.jpg', alt: 'Vista aérea de Río de Janeiro' }
+  puntacana: { img: '/img/puntacana.jpg', alt: 'Vista aérea de una playa de Punta Cana' },
+  rivieramaya: { img: '/img/rivieramaya.jpg', alt: 'Palmera frente al mar turquesa de la Riviera Maya' },
+  aruba: { img: '/img/aruba.jpg', alt: 'Árbol sobre una playa de Aruba' },
+  italia: { img: '/img/italia.jpg', alt: 'Positano sobre la Costa Amalfitana' },
+  grecia: { img: '/img/grecia.jpg', alt: 'Casas blancas y cúpulas azules en Santorini' },
+  espana: { img: '/img/espana.jpg', alt: 'Plaza de España en Sevilla' },
+  maldivas: { img: '/img/maldivas.jpg', alt: 'Villas sobre el agua en Maldivas' },
+  japon: { img: '/img/japon.jpg', alt: 'Pagoda con el monte Fuji de fondo' },
+  tailandia: { img: '/img/tailandia.jpg', alt: 'Botes de madera en una playa de Tailandia' },
+  orlando: { img: '/img/orlando.jpg', alt: 'Castillo en un parque temático de Orlando' },
+  nuevayork: { img: '/img/nuevayork.jpg', alt: 'Puente de Brooklyn y el skyline de Nueva York' },
+  canada: { img: '/img/canada.jpg', alt: 'Lago entre las Montañas Rocosas de Canadá' },
+  egipto: { img: '/img/egipto.jpg', alt: 'Pirámide de Giza bajo el cielo azul' },
+  turquia: { img: '/img/turquia.jpg', alt: 'Globos aerostáticos sobre Capadocia' },
+  dubai: { img: '/img/dubai.jpg', alt: 'Skyline de Dubái' },
+  peru: { img: '/img/peru.jpg', alt: 'Ruinas de Machu Picchu entre montañas' },
+  patagonia: { img: '/img/patagonia.jpg', alt: 'Glaciar Perito Moreno en la Patagonia' },
+  brasil: { img: '/img/brasil.jpg', alt: 'Vista aérea de Río de Janeiro' }
 };
 
 var REGIONS = [
@@ -127,6 +127,13 @@ var QUIZ = [
   { key: 'budget', q: '¿Cuál es tu presupuesto por persona?', opts: [{ v: 'b1', label: 'Hasta USD 2.500', desc: 'Viajes más cortos o cercanos' }, { v: 'b2', label: 'USD 2.500 a 4.500', desc: 'El rango más elegido' }, { v: 'b3', label: 'Más de USD 4.500', desc: 'Una experiencia sin recortes' }, { v: 'any', label: 'Todavía no sé', desc: 'Primero quiero inspirarme' }] }
 ];
 var WA = '5491163720022';
+var ROUTES = { home: '/', destinos: '/destinos', paquetes: '/paquetes', nosotros: '/nosotros', juegos: '/juegos', contacto: '/contacto' };
+var TITLES = { home: 'DM Viajes | Viajes que transforman', destinos: 'Destinos | DM Viajes', paquetes: 'Paquetes | DM Viajes', nosotros: 'Sobre nosotros | DM Viajes', juegos: 'Juegos | DM Viajes', contacto: 'Contacto | DM Viajes' };
+function viewFromPath(path) {
+  var p = (path || '/').replace(/\/+$/, '') || '/';
+  for (var k in ROUTES) { if (ROUTES[k] === p) return k; }
+  return 'home';
+}
 
 function money(n) { return 'USD ' + n.toLocaleString('es-AR'); }
 function tier(p) { return p.price <= 2500 ? 'b1' : (p.price <= 4500 ? 'b2' : 'b3'); }
@@ -139,13 +146,13 @@ class Component extends DCLogic {
   constructor(props) {
     super(props);
     this.state = {
-      view: 'home', slide: 0, menuOpen: false,
+      view: viewFromPath(window.location.pathname), slide: 0, menuOpen: false,
       fRegion: 'todas', fType: 'todos', fBudget: 'todos', sort: 'rel',
       dRegion: 'todas', pkgId: null, faq: 0, dd: null,
       planner: { region: 'todas', type: 'todos', budget: 'todos' },
       news: '', newsOk: false, newsErr: false,
       form: { name: '', email: '', phone: '', interest: '', date: '', travelers: 2, type: '', message: '', code: '' },
-      errs: {}, sent: false,
+      errs: {}, sent: false, sending: false, reqId: '',
       game: 'memo', deck: newDeck(), flipped: [], matched: [], moves: 0, lock: false, memo: 'playing', copied: false,
       qStep: 0, qAns: {}
     };
@@ -169,12 +176,16 @@ class Component extends DCLogic {
     };
     document.addEventListener('scroll', this.onScroll, true);
     var self = this;
+    try { history.replaceState({ view: this.state.view }, '', ROUTES[this.state.view] + window.location.search + window.location.hash); } catch (e) {}
+    document.title = TITLES[this.state.view];
+    this.onPop = function () { var v = viewFromPath(window.location.pathname); self.setState({ view: v, menuOpen: false, pkgId: null, dd: null }); document.title = TITLES[v]; window.scrollTo(0, 0); };
+    window.addEventListener('popstate', this.onPop);
     this.iv = setInterval(function () { if (self.state.view === 'home') self.setState({ slide: (self.state.slide + 1) % HERO.length }); }, 6000);
   }
 
   componentDidUpdate() { var self = this; this.scanFx(); setTimeout(function () { self.scanFx(); }, 60); }
 
-  componentWillUnmount() { clearInterval(this.iv); clearTimeout(this.t); if (this.io) this.io.disconnect(); document.removeEventListener('click', this.onDoc); document.removeEventListener('scroll', this.onScroll, true); }
+  componentWillUnmount() { clearInterval(this.iv); clearTimeout(this.t); if (this.io) this.io.disconnect(); document.removeEventListener('click', this.onDoc); document.removeEventListener('scroll', this.onScroll, true); window.removeEventListener('popstate', this.onPop); clearTimeout(this.st); }
 
   setupFx() {
     try {
@@ -194,6 +205,8 @@ class Component extends DCLogic {
 
   nav(v, extra) {
     this.setState(Object.assign({ view: v, menuOpen: false, pkgId: null, dd: null }, extra || {}));
+    try { if (window.location.pathname !== ROUTES[v]) history.pushState({ view: v }, '', ROUTES[v]); } catch (e) {}
+    document.title = TITLES[v];
     var toTop = function () {
       try { window.scrollTo(0, 0); } catch (e) {}
       try { document.documentElement.scrollTop = 0; document.body.scrollTop = 0; } catch (e) {}
@@ -224,10 +237,31 @@ class Component extends DCLogic {
   prize() { var m = this.state.moves; return m <= 16 ? { pct: 10, code: 'DMMEMO10' } : (m <= 24 ? { pct: 7, code: 'DMMEMO7' } : { pct: 5, code: 'DMMEMO5' }); }
 
   submit() {
-    var f = this.state.form;
-    var errs = { name: !f.name.trim(), email: !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(f.email.trim()), message: !f.message.trim() };
-    if (errs.name || errs.email || errs.message) { this.setState({ errs: errs }); return; }
-    this.setState({ errs: {}, sent: true });
+    var self = this, f = this.state.form;
+    if (this.state.sending) return;
+    var name = f.name.trim(), email = f.email.trim(), phone = f.phone.trim(), msg = f.message.trim();
+    var digits = phone.replace(/\D/g, '');
+    var errs = {};
+    if (name.length < 2) errs.name = 'Contanos tu nombre.';
+    if (!email) errs.email = 'Necesitamos tu correo para responderte.';
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) errs.email = 'Revisá el correo: parece incompleto.';
+    if (phone && (digits.length < 8 || digits.length > 15)) errs.phone = 'Revisá el teléfono: debe tener entre 8 y 15 números.';
+    if (msg.length < 10) errs.message = msg ? 'Contanos un poco más (al menos 10 caracteres).' : 'Escribinos unas líneas sobre tu viaje.';
+    var order = ['name', 'email', 'phone', 'message'], first = order.filter(function (k) { return errs[k]; })[0];
+    if (first) {
+      this.setState({ errs: errs });
+      var ids = { name: 'f-name', email: 'f-email', phone: 'f-phone', message: 'f-msg' };
+      setTimeout(function () { var el = document.getElementById(ids[first]); if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'center' }); el.focus({ preventScroll: true }); } }, 30);
+      return;
+    }
+    this.setState({ errs: {}, sending: true });
+    this.st = setTimeout(function () {
+      var d = new Date(), pad = function (x) { return (x < 10 ? '0' : '') + x; };
+      var reqId = 'DM-' + d.getFullYear() + pad(d.getMonth() + 1) + pad(d.getDate()) + '-' + Math.floor(1000 + Math.random() * 9000);
+      self.setState({ sending: false, sent: true, reqId: reqId });
+      try { window.dataLayer = window.dataLayer || []; window.dataLayer.push({ event: 'generate_lead', form_name: 'cotizacion', trip_type: f.type || 'sin definir', travelers: f.travelers, has_discount_code: !!f.code }); } catch (e) {}
+      setTimeout(function () { var card = document.getElementById('form-card'); if (card) card.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 40);
+    }, 900);
   }
 
   renderVals() {
@@ -367,7 +401,8 @@ class Component extends DCLogic {
       qTop: qTop || { art: ART.grecia }, qAlts: qAlts,
 
       form: f, errs: s.errs,
-      errCls: { name: s.errs.name ? 'err' : '', email: s.errs.email ? 'err' : '', message: s.errs.message ? 'err' : '' },
+      errCls: { name: s.errs.name ? 'err' : '', email: s.errs.email ? 'err' : '', phone: s.errs.phone ? 'err' : '', message: s.errs.message ? 'err' : '' },
+      sending: s.sending, btnLabel: s.sending ? 'Enviando…' : 'Enviar consulta', reqId: s.reqId,
       on: { name: field('name'), email: field('email'), phone: field('phone'), interest: field('interest'), date: field('date'), message: field('message'), code: field('code') },
       fTypes: FORM_TYPES.map(function (t) { return { label: t, cls: f.type === t ? 'on' : '', pick: function () { self.setState({ form: Object.assign({}, self.state.form, { type: self.state.form.type === t ? '' : t }) }); } }; }),
       travelersTxt: f.travelers === 1 ? '1 viajero' : f.travelers + ' viajeros',
@@ -376,7 +411,7 @@ class Component extends DCLogic {
       submit: function () { self.submit(); },
       formOn: !s.sent, sent: s.sent, firstName: firstName,
       sumInterest: f.interest || f.type || 'A definir con tu asesor', sumCode: f.code || 'Sin código',
-      newForm: function () { self.setState({ sent: false, form: { name: '', email: '', phone: '', interest: '', date: '', travelers: 2, type: '', message: '', code: '' } }); },
+      newForm: function () { self.setState({ sent: false, reqId: '', errs: {}, form: { name: '', email: '', phone: '', interest: '', date: '', travelers: 2, type: '', message: '', code: '' } }); },
 
       news: s.news, newsForm: !s.newsOk, newsOk: s.newsOk, newsErr: s.newsErr,
       onNews: function (e) { self.setState({ news: e.target.value, newsErr: false }); },
